@@ -1,0 +1,978 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Height APP API",
+    "description": "Unofficial Open API 3.1 specification for [Height App API](https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda). This is not affiliated with Height team.",
+    "contact": {
+      "email": "gil@beomjun.kr"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Height official API Docs",
+    "url": "https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda"
+  },
+  "servers": [
+    {
+      "url": "https://https://api.height.app"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Lists",
+      "description": "Tasks belong to one list. To create tasks, it's necessary to know in which list you want to create them."
+    },
+    {
+      "name": "Tasks"
+    },
+    {
+      "name": "Activities",
+      "description": "Activities can be messages, status updates of the task or integration updates (i.e. GitHub)."
+    },
+    {
+      "name": "Field templates",
+      "description": "Field templates define what attributes look like. To create tasks with custom attributes, it's important to know which field templates are available."
+    },
+    {
+      "name": "Task forms"
+    },
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Groups"
+    },
+    {
+      "name": "Security log events"
+    },
+    {
+      "name": "Workspace"
+    },
+    {
+      "name": "Search"
+    },
+    {
+      "name": "Webhooks"
+    },
+    {
+      "name": "OAuth",
+      "description": "Height uses the authorization code grant flow (see the [OAuth2 spec](https://datatracker.ietf.org/doc/html/rfc6749) ) in which an application should send the user to Height’s authorization endpoint to ask for permission to access their Height workspace. If granted, the app will receive a redirect with a code that can be exchanged for an access token. This token can be used in the `Authorization` header to make Height API calls on behalf of the user."
+    }
+  ],
+  "paths": {
+    "/lists": {
+      "post": {
+        "tags": ["Lists"],
+        "summary": "Create a list",
+        "operationId": "createList",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateListRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Lists"],
+        "summary": "List all lists",
+        "operationId": "listAllLists",
+        "description": "Use this endpoint to retrieve all the lists of the workspace. Only lists shared with the entire workspace will be returned.",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListAllResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lists/{id}": {
+      "put": {
+        "tags": ["Lists"],
+        "summary": "Update a list",
+        "operationId": "updateList",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique id of the list (UUIDv4)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateListRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "Create a task",
+        "operationId": "createTask",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskObject"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "realtime",
+            "in": "query",
+            "description": "(defaults to true) - use false when migrating tasks",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "notifyUsers",
+            "in": "query",
+            "description": "(defaults to true) - use false when migrating tasks",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ListObject": {
+        "type": "object",
+        "description": "Tasks belong to one list. To create tasks, it's necessary to know in which list you want to create them.",
+        "required": [
+          "id",
+          "model",
+          "type",
+          "key",
+          "description",
+          "url",
+          "appearance"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique id of the list (UUIDv4)"
+          },
+          "model": {
+            "type": "string",
+            "example": "list",
+            "enum": ["list"],
+            "description": "The model is always `list`"
+          },
+          "type": {
+            "type": "string",
+            "description": "- `list`: a list that contains tasks. You can only create tasks in this type of list directly.\n- `smartlist`: a smart list use filters to find tasks across different lists\n- `user`: a special smart list that displays tasks assigned to a user\n- `inbox`: a special smart list to display recent conversations\n- `search`: a special smart list to search tasks",
+            "enum": ["list", "smartlist", "user", "inbox", "search"]
+          },
+          "key": {
+            "type": "string",
+            "description": "The unique key of your list is used as their url.\n\nIf the key is `general`, the url will be: `https://your-workspace.height.app/general`\n\nKeys need to respect these rules: \n\n- valid characters are: lower-case letters, dashes and numbers\n- needs to start with a lower-case letter\n- key is unique across the workspace"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the list. It can be an empty string."
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the list."
+          },
+          "appearance": {
+            "type": "object",
+            "required": ["iconUrl"],
+            "properties": {
+              "iconUrl": {
+                "type": "string",
+                "description": "URL of the list icon"
+              },
+              "hue": {
+                "type": ["null", "number"],
+                "description": "hue of the list color "
+              }
+            }
+          }
+        }
+      },
+      "FiltersObject": {
+        "type": "object",
+        "description": "See FiltersObject.ts"
+      },
+      "CreateNormalListRequest": {
+        "type": "object",
+        "description": "Create a list",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["list", "smartlist"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "appearance": {
+            "type": "object",
+            "required": ["icon"],
+            "properties": {
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "list",
+                  "listCircles",
+                  "listTriangle",
+                  "listSquare",
+                  "listLines",
+                  "listRectangles",
+                  "listCircle",
+                  "listRocket",
+                  "listMushroom",
+                  "listBolt",
+                  "listBug",
+                  "listFlower",
+                  "listThumbsUp",
+                  "listTarget",
+                  "listSparkle",
+                  "listMedal",
+                  "listFlag"
+                ]
+              },
+              "hue": {
+                "description": "Hue is between 0 and 360 and used to determine the color.\n\nIf `null`, the list has no color.",
+                "type": ["null", "number"],
+                "minimum": 0,
+                "maximum": 360
+              }
+            }
+          },
+          "visualization": {
+            "description": "visualization string (optional, default = list) list or kanban",
+            "default": "list",
+            "type": "string",
+            "enum": ["list", "kanban"]
+          }
+        }
+      },
+      "CreateSmartListRequest": {
+        "type": "object",
+        "description": "Create a smartlist",
+        "required": ["name", "type", "filters"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["list", "smartlist"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/FiltersObject"
+          },
+          "appearance": {
+            "type": "object",
+            "required": ["icon"],
+            "properties": {
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "list",
+                  "listCircles",
+                  "listTriangle",
+                  "listSquare",
+                  "listLines",
+                  "listRectangles",
+                  "listCircle",
+                  "listRocket",
+                  "listMushroom",
+                  "listBolt",
+                  "listBug",
+                  "listFlower",
+                  "listThumbsUp",
+                  "listTarget",
+                  "listSparkle",
+                  "listMedal",
+                  "listFlag"
+                ]
+              },
+              "hue": {
+                "description": "Hue is between 0 and 360 and used to determine the color.\n\nIf `null`, the list has no color.",
+                "type": ["null", "number"],
+                "minimum": 0,
+                "maximum": 360
+              }
+            }
+          },
+          "visualization": {
+            "description": "visualization string (optional, default = list) list or kanban",
+            "default": "list",
+            "type": "string",
+            "enum": ["list", "kanban"]
+          }
+        }
+      },
+      "CreateListRequest": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CreateNormalListRequest"
+          },
+          {
+            "$ref": "#/components/schemas/CreateSmartListRequest"
+          }
+        ]
+      },
+      "ListAllResponse": {
+        "type": "object",
+        "required": ["lists"],
+        "properties": {
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListObject"
+            }
+          }
+        }
+      },
+      "UpdateListRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "appearance": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "description": "the name of the icon e.g. listCircles, listBug."
+              },
+              "hue": {
+                "type": "number"
+              }
+            },
+            "required": ["icon"]
+          },
+          "visualization": {
+            "type": "string",
+            "enum": [
+              "list",
+              "kanban",
+              "calendar",
+              "gantt",
+              "conversation",
+              "figma"
+            ]
+          },
+          "archivedAt": {
+            "type": "string",
+            "description": "string representing a date the list was archived at, in the form of an ISO 8601 date (e.g. 2011-04-11T10:20:30Z).",
+            "format": "date-time"
+          }
+        }
+      },
+      "TaskObject": {
+        "type": "object",
+        "required": [
+          "id",
+          "model",
+          "index",
+          "listIds",
+          "name",
+          "description",
+          "status",
+          "assigneesIds",
+          "fields",
+          "deleted",
+          "deletedAt",
+          "deletedByUserId",
+          "completed",
+          "completedAt",
+          "createdAt",
+          "createdUserId",
+          "lastActivityAt",
+          "url",
+          "trashedAt",
+          "trashedByUserId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique id of the task"
+          },
+          "model": {
+            "type": "string",
+            "enum": ["task"],
+            "description": "The model is always `task`"
+          },
+          "index": {
+            "type": "number",
+            "description": "The task index. For example, if the task is T-123, its index is 123."
+          },
+          "listIds": {
+            "type": "array",
+            "description": "Tasks belong to one or more lists. To create tasks, it's necessary to know in which list you want to create them.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the task."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the task. It's only retrieved if you use include. See ['Get a task'](https://www.notion.so/Get-a-task-8afda1c08e7f4f07a5c53720710cf24e)."
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the task.\n- `backLog`\n- `inProgress`\n- `done`\n- and any *UUID* of available statuses. You can find the *UUIDs* through the field template API."
+          },
+          "assigneesIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The assignees of the task. You can find the UUIDs of users through the users API.\n ['List all users'](https://www.notion.so/List-all-users-ea66d04e48534b32927903c4deee58e8)",
+            "minItems": 1
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["fieldTemplateId"],
+              "properties": {
+                "fieldTemplateId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The id of the appropriate field template"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "For text fields: the text value of the field. For select fields: the id of the selected option"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "For date fields: the date value of the field"
+                },
+                "labels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "For labels fields: the labels of the field"
+                },
+                "linkedTasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "index": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "description": "For linkedTasks fields: the tasks to be linked, in the format: { \"id\": \"UUID\", \"index\": number }"
+                }
+              }
+            }
+          },
+          "deleted": {
+            "type": "boolean",
+            "description": "If the task was deleted."
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date at which the task was deleted."
+          },
+          "deletedByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The user that deleted the task."
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "If the status is considered as completed (i.e. `done`), the value will be `true`."
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The user that created the task."
+          },
+          "lastActivityAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the task."
+          },
+          "trashedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A timestamp when the task was moved to the trash. Tasks are deleted after 30 days in the trash. This will be null unless the task is currently in the trash or deleted."
+          },
+          "trashedByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the user that moved the task to the trash"
+          },
+          "parentTaskId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "If the task is a subtask of another task, `parentTaskId` will be the id of the parent task."
+          }
+        }
+      },
+      "ZendeskTicketLinkObject": {
+        "type": "object",
+        "required": ["url", "metadata"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL of the Zendesk ticket."
+          },
+          "metadata": {
+            "type": "object",
+            "required": ["type", "ticketId"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["zendeskTicket"],
+                "description": "The type of the metadata."
+              },
+              "ticketId": {
+                "type": "integer",
+                "description": "The ID of the Zendesk ticket."
+              },
+              "subject": {
+                "type": "string",
+                "description": "The subject of the Zendesk ticket."
+              },
+              "description": {
+                "type": "string",
+                "description": "The description of the Zendesk ticket."
+              }
+            }
+          }
+        }
+      },
+      "NotionDocumentLinkObject": {
+        "type": "object",
+        "required": ["url", "metadata"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL of the Notion document."
+          },
+          "metadata": {
+            "type": "object",
+            "required": ["type", "pageId"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["notionDocument"],
+                "description": "The type of the metadata."
+              },
+              "pageId": {
+                "type": "string",
+                "description": "The ID of the Notion page."
+              }
+            }
+          }
+        }
+      },
+      "FigmaLinkObject": {
+        "type": "object",
+        "required": ["url", "metadata"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL of the Figma link."
+          },
+          "metadata": {
+            "type": "object",
+            "required": ["type", "fileKey"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["figmaLink"],
+                "description": "The type of the metadata."
+              },
+              "document": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the Figma document."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the Figma document (optional)."
+                  }
+                },
+                "description": "The Figma document."
+              },
+              "fileKey": {
+                "type": "string",
+                "description": "The file key of the Figma document."
+              },
+              "page": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the Figma page."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the Figma page (optional)."
+                      }
+                    },
+                    "description": "The Figma page."
+                  },
+                  {
+                    "type": "null",
+                    "description": "No Figma page is associated with this link."
+                  }
+                ]
+              },
+              "frame": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the Figma frame."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the Figma frame (optional)."
+                      }
+                    },
+                    "description": "The Figma frame."
+                  },
+                  {
+                    "type": "null",
+                    "description": "No Figma frame is associated with this link."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "SentryIssueLinkObject": {
+        "type": "object",
+        "required": ["metadata"],
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "required": ["type", "project", "issueId"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["sentryIssue"],
+                "description": "The type of the metadata."
+              },
+              "project": {
+                "type": "object",
+                "required": ["slug", "id"],
+                "properties": {
+                  "slug": {
+                    "type": "string",
+                    "description": "The slug of the Sentry project."
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the Sentry project."
+                  }
+                },
+                "description": "The Sentry project."
+              },
+              "issueId": {
+                "type": "string",
+                "description": "The ID of the Sentry issue."
+              }
+            }
+          }
+        }
+      },
+      "SentryAlertLinkObject": {
+        "type": "object",
+        "required": ["metadata"],
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "required": [
+              "type",
+              "organizationId",
+              "lastAlertEvent",
+              "alertRuleId",
+              "lastAlertStatus"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["sentryAlert"],
+                "description": "The type of the metadata."
+              },
+              "organizationId": {
+                "type": "string",
+                "description": "The ID of the Sentry organization."
+              },
+              "lastAlertEvent": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time of the last alert event for the Sentry alert."
+              },
+              "alertRuleId": {
+                "type": "string",
+                "description": "The ID of the alert rule for the Sentry alert."
+              },
+              "lastAlertStatus": {
+                "type": "string",
+                "enum": ["critical", "warning", "resolved"],
+                "description": "The status of the last alert for the Sentry alert."
+              }
+            }
+          }
+        }
+      },
+      "LinkObjects": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ZendeskTicketLinkObject"
+          },
+          {
+            "$ref": "#/components/schemas/NotionDocumentLinkObject"
+          },
+          {
+            "$ref": "#/components/schemas/FigmaLinkObject"
+          },
+          {
+            "$ref": "#/components/schemas/SentryIssueLinkObject"
+          },
+          {
+            "$ref": "#/components/schemas/SentryAlertLinkObject"
+          }
+        ]
+      },
+      "CreateTaskRequest": {
+        "type": "object",
+        "required": ["name", "listIds"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "listIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "description": "An array of UUIDs (one or more)"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "assigneesIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "An array of UUIDs of the users assigned to the task (optional)."
+          },
+          "parentTaskId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the parent task (optional)."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["fieldTemplateId"],
+              "properties": {
+                "fieldTemplateId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The id of the appropriate field template"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "For text fields: the text value of the field. For select fields: the id of the selected option"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "For date fields: the date value of the field"
+                },
+                "labels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "For labels fields: the labels of the field"
+                },
+                "linkedTasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "index": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "description": "For linkedTasks fields: the tasks to be linked, in the format: { \"id\": \"UUID\", \"index\": number }"
+                }
+              }
+            }
+          },
+          "orderIntent": {
+            "type": "object",
+            "description": "Inserts the task at the right place in the list.",
+            "properties": {
+              "intent": {
+                "type": "string",
+                "enum": ["start", "end", "before", "after"]
+              },
+              "taskId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "(only used for before and after intent)"
+              }
+            }
+          }
+        }
+      },
+      "CreateTaskRequestWithQueries": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateTaskRequest"
+          },
+          {
+            "type": "object",
+            "description": "This is for queries",
+            "properties": {
+              "realtime": {
+                "description": "(defaults to true) - use false when migrating tasks",
+                "type": "boolean"
+              },
+              "notifyUsers": {
+                "description": "(defaults to true) - use false when migrating tasks",
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
