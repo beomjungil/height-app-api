@@ -69,6 +69,13 @@
         "tags": ["Lists"],
         "summary": "Create a list",
         "operationId": "createList",
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "label": "SDK",
+            "source": "const height = new Height({secretKey: 'secret_your-key'})\n\nheight.lists.create({...})"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -96,6 +103,13 @@
         "tags": ["Lists"],
         "summary": "List all lists",
         "operationId": "listAllLists",
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "label": "SDK",
+            "source": "const height = new Height({secretKey: 'secret_your-key'})\n\nheight.lists.all()"
+          }
+        ],
         "description": "Use this endpoint to retrieve all the lists of the workspace. Only lists shared with the entire workspace will be returned.",
         "responses": {
           "200": {
@@ -119,6 +133,13 @@
         "tags": ["Lists"],
         "summary": "Update a list",
         "operationId": "updateList",
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "label": "SDK",
+            "source": "const height = new Height({secretKey: 'secret_your-key'})\n\nheight.lists.update({...})"
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -160,6 +181,14 @@
         "tags": ["Tasks"],
         "summary": "Create a task",
         "operationId": "createTask",
+
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "label": "SDK",
+            "source": "const height = new Height({secretKey: 'secret_your-key'})\n\nheight.tasks.create({...})"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
