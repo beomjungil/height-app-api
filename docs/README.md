@@ -1,41 +1,31 @@
-# Website
+<p align="center">
+<img src="https://user-images.githubusercontent.com/24666383/219410352-87a39927-2e12-4ead-98b2-b4627fc2def3.png"/>
+</p>
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+<hr />
 
-### Installation
+<p align="center">
+<a href="https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda#96028ae01cb64dbf8a36ba9c31f3cd2a">
+Height Official Docs
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="">
+Tutorial
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="">
+Docs
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="">
+Test API (OpenAPI)
+</a>
+</p>
 
-```
-$ yarn
-```
 
-### Local Development
+<hr />
 
-```
-$ yarn start
-```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### Developement
 
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+TODO
