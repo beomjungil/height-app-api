@@ -9,7 +9,7 @@
 Height Official Docs
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="https://height-api.xyz/http://height-api.xyz/docs/intro">
+<a href="http://height-api.xyz/docs/intro">
 Tutorial
 </a>
 &nbsp;&nbsp;&nbsp;
@@ -19,6 +19,10 @@ API Reference
 &nbsp;&nbsp;&nbsp;
 <a href="http://height-api.xyz/openapi/">
 OpenAPI spec (OpenAPI)
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="https://www.npmjs.com/package/height-app-api">
+NPM
 </a>
 </p>
 
@@ -33,36 +37,9 @@ OpenAPI spec (OpenAPI)
 🚧
 </td>
 <td>
-This package is currently in development, and not actually usable yet.
+This package is currently in development,
+Only some features are supported. See <a href="https://github.com/beomjungil/height-app-api/blob/main/TODO.md">here</a> for details
 <br/>
-<b>Please DO NOT USE</b>
 </td>
 </tr>
 </table>
-
-### To-do
-
-**Migrate to OpenAPI Spec from [official docs](https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda)**
-- [x] Add 'Lists' APIs spec
-- [x] Add 'Tasks' APIs spec
-- [x] Add 'Activities' APIs spec
-- [x] Add 'Field templates' APIs spec
-- [x] Add 'Task forms' APIs spec
-- [x] Add 'Users' APIs spec
-- [x] Add 'Groups' APIs spec
-- [x] Add 'Security log events' APIs spec
-- [ ] Add 'Workspace' APIs spec
-- [ ] Add 'Search' APIs spec
-
-**Make it public**
-- [ ] Publish to npm registry
-
-
-**Add Advanced features**
-- [ ] Add 'Webhooks' spec
-- [ ] Add 'OAuth2 Applications' spec
-
-**Add demo app**
-- [ ] Implement height cli
-- [ ] Implement raycast height extension
-- [ ] Implement 'height task card' figma plugin

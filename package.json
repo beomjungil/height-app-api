@@ -1,10 +1,18 @@
 {
   "name": "height-app-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unofficial TypeScript Wrapper for Height App API",
   "license": "MIT",
   "author": "Beomjun Gil <gil@beomjun.kr> (https://github.com/beomjungil)",
-  "keywords": [],
+  "keywords": [
+    "height",
+    "height api",
+    "height sdk",
+    "height app",
+    "height app api",
+    "height app sdk",
+    "height typescript"
+  ],
   "scripts": {
     "lint": "eslint src --ext .ts",
     "build": "tsx build.ts",
