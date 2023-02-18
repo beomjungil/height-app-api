@@ -46,7 +46,7 @@ This package is currently in development, and not actually usable yet.
 - [x] Add 'Lists' APIs spec
 - [x] Add 'Tasks' APIs spec
 - [x] Add 'Activities' APIs spec
-- [ ] Add 'Field templates' APIs spec
+- [x] Add 'Field templates' APIs spec
 - [ ] Add 'Task forms' APIs spec
 - [ ] Add 'Users' APIs spec
 - [ ] Add 'Groups' APIs spec

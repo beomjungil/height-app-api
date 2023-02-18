@@ -3,11 +3,14 @@
 /* eslint-disable */
 
 export type { ActivityObject } from './models/ActivityObject';
+export type { CreateFieldTemplateOptionRequest } from './models/CreateFieldTemplateOptionRequest';
+export type { CreateFieldTemplateOptionRequestWithId } from './models/CreateFieldTemplateOptionRequestWithId';
 export type { CreateListRequest } from './models/CreateListRequest';
 export type { CreateNormalListRequest } from './models/CreateNormalListRequest';
 export type { CreateSmartListRequest } from './models/CreateSmartListRequest';
 export type { CreateTaskRequest } from './models/CreateTaskRequest';
 export type { CreateTaskRequestWithQueries } from './models/CreateTaskRequestWithQueries';
+export type { FieldTemplateObject } from './models/FieldTemplateObject';
 export type { FigmaLinkObject } from './models/FigmaLinkObject';
 export type { FiltersObject } from './models/FiltersObject';
 export type { GetTaskRequest } from './models/GetTaskRequest';
@@ -15,6 +18,7 @@ export type { GetTaskRequestWithId } from './models/GetTaskRequestWithId';
 export type { LinkObjects } from './models/LinkObjects';
 export type { ListActivitiesRequest } from './models/ListActivitiesRequest';
 export type { ListActivitiesResponse } from './models/ListActivitiesResponse';
+export type { ListAllFieldTemplatesResponse } from './models/ListAllFieldTemplatesResponse';
 export type { ListAllResponse } from './models/ListAllResponse';
 export type { ListObject } from './models/ListObject';
 export type { MoveTasksRequest } from './models/MoveTasksRequest';
@@ -38,6 +42,8 @@ export type { SearchTasksResponse } from './models/SearchTasksResponse';
 export type { SentryAlertLinkObject } from './models/SentryAlertLinkObject';
 export type { SentryIssueLinkObject } from './models/SentryIssueLinkObject';
 export type { TaskObject } from './models/TaskObject';
+export type { UpdateFieldTemplateOptionRequest } from './models/UpdateFieldTemplateOptionRequest';
+export type { UpdateFieldTemplateOptionRequestWithId } from './models/UpdateFieldTemplateOptionRequestWithId';
 export type { UpdateListRequest } from './models/UpdateListRequest';
 export type { UpdateListRequestWithId } from './models/UpdateListRequestWithId';
 export type { UpdateTaskRequest } from './models/UpdateTaskRequest';

@@ -365,6 +365,117 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListActivitiesResponse"
+  /fieldTemplates:
+    get:
+      tags:
+        - Field Templates
+      summary: List all field templates
+      operationId: listAllFieldTemplates
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.fieldTemplates.all();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAllFieldTemplatesResponse"
+  /fieldTemplates/:id/options:
+    post:
+      tags:
+        - Field Templates
+      summary: Create an option for a field template
+      description: This endpoint adds an option to a `select` or `labels` field template.
+      operationId: createFieldTemplateOption
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.fieldTemplates.createOption({...});
+      parameters:
+        - name: id
+          in: path
+          description: field template id (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFieldTemplateOptionRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldTemplateObject"
+  /fieldTemplates/:id/options/:optionId:
+    put:
+      tags:
+        - Field Templates
+      summary: Update or delete an option for a field template
+      operationId: updateFieldTemplateOption
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.fieldTemplates.updateOption({...});
+      description: |-
+        This endpoint updates or deletes an option to a `select` or `labels` field template.
+
+        The field template must be unlocked to use this endpoint.  Locking and unlocking field templates is an enterprise feature.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFieldTemplateOptionRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldTemplateObject"
+  /taskForms/:id/answers:
+    post:
+      tags:
+        - Task Forms
+      summary: Create a task from a public task form
+      description: |-
+        ❌ Task forms have a set number of questions, so it is impossible to set some attributes for a task using this endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskFromTaskFormRequest"
+        required: true
 components:
   securitySchemes:
     apiKey:
@@ -1684,3 +1795,163 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ActivityObject"
+    FieldTemplateObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique id of the field template.
+        model:
+          type: string
+          enum:
+            - fieldTemplate
+          description: The model is always `fieldTemplate`.
+        name:
+          type: string
+          description: The name of the field template.
+        type:
+          type: string
+          description: |-
+            Possible types:
+
+            - `text`: any text value attribute (i.e. Story Points)
+            - `labels`: used for tags for example
+            - `select`: used for priority, sprint,…
+            - `date`: used for due date,…
+            - `linkedTasks`: usually used for dependencies and so on
+            - `status`: the status attribute (only one field template of that type)
+          enum:
+            - text
+            - labels
+            - select
+            - date
+            - linkedTasks
+            - status
+        labelSets:
+          type: array
+          description: An array of label sets, only available when the type of the field template is `status`.
+          items:
+            type: object
+            required:
+              - id
+              - model
+              - value
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: The unique id of the field label set.
+              model:
+                type: string
+                enum:
+                  - fieldLabelSet
+                description: The model is always `fieldLabelSet`.
+              value:
+                type: string
+                description: The name of the field label set.
+        labels:
+          type: array
+          description: Only available when the type of the field template is `labels`, `select` or `status`.
+          items:
+            type: object
+            required:
+              - id
+              - model
+              - value
+              - hue
+              - statusState
+            properties:
+              id:
+                type: string
+                description: UUID or string (backLog, inProgress and done are hard-coded).
+              model:
+                type: string
+                enum:
+                  - fieldLabel
+                description: The model is always `fieldLabel`.
+              value:
+                type: string
+                description: The name of the label.
+              hue:
+                type: number
+                description: The hue of the label's color (between 0 and 360).
+              labelSetId:
+                type: string
+                format: uuid
+                description: The id of the label set this label belongs to, if any. Only if the type of field template is `status`.
+              statusState:
+                type: string
+                description: |-
+                  The state of the status, only available when the type of the field template is `status`.
+                  Note that a task is considered as completed if its status has a state of `canceled` or `completed`.
+                enum:
+                  - default
+                  - started
+                  - blocked
+                  - canceled
+                  - completed
+        archive:
+          type: boolean
+          description: This attribute has been archived.
+      required:
+        - id
+        - model
+        - name
+        - type
+        - archive
+    ListAllFieldTemplatesResponse:
+      type: object
+      required:
+        - list
+      properties:
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldTemplateObject"
+    CreateFieldTemplateOptionRequest:
+      type: object
+      required:
+        - value
+      properties:
+        value:
+          type: string
+        hue:
+          type: number
+          description: number between 0 and 360 (optional)
+    CreateFieldTemplateOptionRequestWithId:
+      allOf:
+        - $ref: "#/components/schemas/CreateFieldTemplateOptionRequest"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+    UpdateFieldTemplateOptionRequest:
+      type: object
+      required:
+        - value
+      properties:
+        value:
+          type: string
+        hue:
+          type: number
+          description: number between 0 and 360 (optional)
+        deleted:
+          type: boolean
+    UpdateFieldTemplateOptionRequestWithId:
+      allOf:
+        - $ref: "#/components/schemas/UpdateFieldTemplateOptionRequest"
+        - type: object
+          required:
+            - id
+            - optionId
+          properties:
+            id:
+              type: string
+              format: uuid
+            optionId:
+              type: string
+              format: uuid
