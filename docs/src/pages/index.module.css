@@ -3,16 +3,62 @@
  * and scoped locally.
  */
 
+ .hero {
+  background: linear-gradient(180deg,var(--Site-contrastedBackgroundStartColor) 20%,var(--Site-contrastedBackgroundColor) 100%);
+  height: 100%;
+  margin-top: calc(var(--ifm-navbar-height) * -1);
+  padding-top: calc(var(--ifm-navbar-height) * 2);
+ }
+
 .heroBanner {
   padding: 4rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: transparent;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  opacity: 0.5;
+  font-feature-settings: "salt","cv11","ccmp","kern";
+}
+
+.clearHeader {
+  --ifm-navbar-background-color: transparent;
+  --ifm-navbar-shadow: none;
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  max-width: 700px;
+  font-feature-settings: "salt","cv11","ccmp","kern";
+}
+
+.gradient {
+  background: linear-gradient(92.02deg,#f845c6 4.43%,#7957ff 47.43%,#2466b8 67.91%,#147787 86.29%,#18b6aa 100.15%);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+  .heroTitle {
+    font-size: 2rem;
+  }
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  .editor {
+    padding: 0;
   }
 }
 
@@ -20,4 +66,104 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+}
+
+.primaryButton {
+  background: var(--ifm-color-primary);
+  color: #ffffff;
+  display: block;
+  font-weight: 700;
+  font-size: 1.25rem;
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 17px;
+  border: none;
+  padding: 0 0.725rem;
+  outline: none;
+  cursor: pointer;
+  box-shadow: var(--Button-shadow);
+  white-space: nowrap;
+  text-decoration: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primaryButton:hover {
+  color: #ffffff;
+}
+.secondaryButton {
+  background: transparent;
+  color: var(--ifm-hero-text-color);
+  display: block;
+  font-weight: 700;
+  font-size: 1.25rem;
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 17px;
+  border: none;
+  padding: 0 0.725rem;
+  outline: none;
+  cursor: pointer;
+  box-shadow: var(--Button-shadow);
+  white-space: nowrap;
+  text-decoration: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.editor {
+  max-width: 1020px;
+  margin: 0 auto;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0px 9px 24px -3px rgba(0, 0, 0, .42), 0px 4px 8px -1px rgba(0, 0, 0, .33);
+  background: rgb(42, 39, 52);
+  padding: 0 1.5rem;
+  overflow: hidden;
+}
+
+.editor pre {
+  background: transparent !important;
+  border-radius: 0;
+  margin: 0;
+  height: 400px;
+}
+
+.editorContainer {
+  padding: 0 1rem;
+}
+
+.tabContainer {
+  display: flex;
+  margin: 0 -1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab {
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.activeTab {
+  opacity: 1;
 }

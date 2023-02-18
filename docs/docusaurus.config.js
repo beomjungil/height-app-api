@@ -33,11 +33,6 @@ const config = {
           editUrl:
             'https://github.com/beomjungil/height-app-api/tree/main/packages/create-docusaurus/templates/shared/'
         },
-        blog: {
-          showReadingTime: true,
-          editUrl:
-            'https://github.com/beomjungil/height-app-api/tree/main/packages/create-docusaurus/templates/shared/'
-        },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
         },
@@ -73,7 +68,7 @@ const config = {
       navbar: {
         title: 'Height App API',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Height App API',
           src: 'img/logo.svg'
         },
         items: [
@@ -94,7 +89,6 @@ const config = {
             position: 'left',
             label: 'OpenAPI spec'
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/beomjungil/height-app-api',
             label: 'GitHub',
@@ -109,43 +103,62 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro'
+                label: 'Official Height Docs',
+                href: 'https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda'
+              },
+              {
+                label: 'Getting Started',
+                to: '/docs/category/getting-started'
+              },
+              {
+                label: 'API References',
+                to: '/docs/api/height-app-api'
+              },
+              {
+                label: 'API References',
+                to: '/docs/api/height-app-api'
+              },
+              {
+                label: 'Open API Specification',
+                to: '/openapi'
               },
             ]
           },
           {
-            title: 'Community',
+            title: 'Contribute',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus'
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus'
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus'
-              },
-            ]
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog'
-              },
               {
                 label: 'GitHub',
                 href: 'https://github.com/beomjungil/height-app-api'
               },
+              {
+                label: 'Discussions',
+                href: 'https://github.com/beomjungil/height-app-api/discussions'
+              },
+              {
+                label: 'Issues',
+                href: 'https://github.com/beomjungil/height-app-api/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc'
+              },
+            ]
+          },
+          {
+            title: 'Try Height App',
+            items: [
+              {
+                label: 'Height App',
+                href: 'https://height.app/'
+              },
+              {
+                label: 'All features',
+                href: 'https://height.app/product/features'
+              },
+              {
+                label: 'Height Team Blog',
+                href: 'https://height.app/blog'
+              },
             ]
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
       },
       prism: {
         theme: lightCodeTheme,

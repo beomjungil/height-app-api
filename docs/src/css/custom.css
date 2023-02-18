@@ -6,6 +6,10 @@
 
 /* You can override the default Infima variables here. */
 :root {
+  --Site-contrastedBackgroundColor: rgba(255, 255, 255, 1);
+  --Site-contrastedBackgroundStartColor: #f9f8ff;
+  --ifm-navbar-background-color: rgba(247, 247, 248, 1);
+  --ifm-background-color: rgba(247, 247, 248, 1);
   --ifm-color-primary: rgba(121, 87, 255, 1);
   --ifm-color-primary-dark: rgba(104, 66, 255,1);
   --ifm-color-primary-darker: rgba(92, 51, 255,1);
@@ -19,6 +23,11 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
+  --Site-contrastedBackgroundColor: rgba(18, 18, 18, 1);
+  --Site-contrastedBackgroundStartColor: #171425;
+  --ifm-navbar-background-color: rgba(36, 36, 36, 1);
+  --ifm-background-color: rgba(36, 36, 36, 1);
+  --ifm-background-surface-color: rgba(36, 36, 36, 1);
   --ifm-color-primary: rgb(155, 120, 255);
   --ifm-color-primary-dark: rgb(139, 97, 255);
   --ifm-color-primary-darker: rgb(120, 71, 255);
