@@ -9,16 +9,16 @@
 Height Official Docs
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="">
+<a href="https://height-api.xyz/http://height-api.xyz/docs/intro">
 Tutorial
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="">
-Docs
+<a href="https://height-api.xyz/docs/api/height-app-api">
+API Reference
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="">
-Test API (OpenAPI)
+<a href="http://height-api.xyz/openapi/">
+OpenAPI spec (OpenAPI)
 </a>
 </p>
 
