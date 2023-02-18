@@ -651,6 +651,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAllGroupsResponse"
+  /securityLogEvents:
+    get:
+      tags:
+        - Security Log Events
+      summary: List all security log event objects
+      operationId: listSecurityLogEvents
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.securityLogEvents.all();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAllSecurityLogEventsResponse"
 components:
   securitySchemes:
     apiKey:
@@ -2542,3 +2562,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GroupObject'
+    SecurityLogEventObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique ID of the event.
+        model:
+          type: string
+          description: The model is always `securityLogEvent`.
+          enum:
+            - securityLogEvent
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time the event occurred. See [Date formats](https://developers.notion.com/reference/rich-text#date-property-values).
+          example: 2023-02-18T11:20:00Z
+        userId:
+          type: string
+          format: uuid
+          description: The ID of the user that initiated the event.
+        userEmail:
+          type: string
+          description: The email of the user that initiated the event.
+        eventType:
+          type: string
+          description: |-
+            Possible values are:
+
+            - `FieldTemplateInsert`: an attribute was created
+            - `FieldTemplateUpdate`: an attribute was updated
+            - `FieldTemplateArchive`: an attribute was archived
+            - `FieldTemplateRestore`: an attribute was restored
+            - `PermissionUpsert`: a list permission was created or updated
+            - `PermissionDelete`: a list permission was deleted
+            - `UserInvite`: an user was invited
+            - `UserSignUp`: an user signed up
+          enum:
+            - FieldTemplateInsert
+            - FieldTemplateUpdate
+            - FieldTemplateArchive
+            - FieldTemplateRestore
+            - PermissionUpsert
+            - PermissionDelete
+            - UserInvite
+            - UserSignUp
+          example: FieldTemplateInsert
+        oldValue:
+          type: object
+          description: The old value of the attribute, permission, etc. that was updated or deleted.
+          example: { "email": "invited@example.com", "access": "member" }
+        newValue:
+          type: object
+          description: The new value of the attribute, permission, etc. that was updated or created.
+          example: { "email": "invited@example.com", "access": "member" }
+      required:
+        - id
+        - model
+        - createdAt
+        - userId
+        - userEmail
+        - eventType
+    ListAllSecurityLogEventsResponse:
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecurityLogEventObject'
+

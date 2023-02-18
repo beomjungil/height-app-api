@@ -26,3 +26,68 @@ This is a unofficial TypeScript wrapper for [Height API](https://www.notion.so/A
 |  Interface | Description |
 |  --- | --- |
 |  [HeightConfig](./height-app-api.heightconfig.md) | Configuration for Height API Wrapper |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [ActivityObject](./height-app-api.activityobject.md) |  |
+|  [CreateFieldTemplateOptionRequest](./height-app-api.createfieldtemplateoptionrequest.md) |  |
+|  [CreateFieldTemplateOptionRequestWithId](./height-app-api.createfieldtemplateoptionrequestwithid.md) |  |
+|  [CreateListRequest](./height-app-api.createlistrequest.md) |  |
+|  [CreateNormalListRequest](./height-app-api.createnormallistrequest.md) | Create a list |
+|  [CreateSmartListRequest](./height-app-api.createsmartlistrequest.md) | Create a smartlist |
+|  [CreateTaskFromTaskFormRequest](./height-app-api.createtaskfromtaskformrequest.md) |  |
+|  [CreateTaskFromTaskFormRequestWithIdQueries](./height-app-api.createtaskfromtaskformrequestwithidqueries.md) |  |
+|  [CreateTaskRequest](./height-app-api.createtaskrequest.md) |  |
+|  [CreateTaskRequestWithQueries](./height-app-api.createtaskrequestwithqueries.md) |  |
+|  [EnabledUserObject](./height-app-api.enableduserobject.md) |  |
+|  [FieldTemplateObject](./height-app-api.fieldtemplateobject.md) |  |
+|  [FigmaLinkObject](./height-app-api.figmalinkobject.md) |  |
+|  [FiltersObject](./height-app-api.filtersobject.md) | [FiltersObject](https://www.notion.so/Search-tasks-bb201e3db042442e9a1d0686a7b271a2) |
+|  [GetTaskFormRequest](./height-app-api.gettaskformrequest.md) |  |
+|  [GetTaskRequest](./height-app-api.gettaskrequest.md) |  |
+|  [GetTaskRequestWithId](./height-app-api.gettaskrequestwithid.md) |  |
+|  [GetUserRequest](./height-app-api.getuserrequest.md) |  |
+|  [GroupObject](./height-app-api.groupobject.md) |  |
+|  [InvitedUserObject](./height-app-api.inviteduserobject.md) |  |
+|  [LinkObjects](./height-app-api.linkobjects.md) |  |
+|  [ListActivitiesRequest](./height-app-api.listactivitiesrequest.md) |  |
+|  [ListActivitiesResponse](./height-app-api.listactivitiesresponse.md) |  |
+|  [ListAllFieldTemplatesResponse](./height-app-api.listallfieldtemplatesresponse.md) |  |
+|  [ListAllGroupsResponse](./height-app-api.listallgroupsresponse.md) |  |
+|  [ListAllResponse](./height-app-api.listallresponse.md) |  |
+|  [ListAllSecurityLogEventsResponse](./height-app-api.listallsecuritylogeventsresponse.md) |  |
+|  [ListAllUsersResponse](./height-app-api.listallusersresponse.md) |  |
+|  [ListObject](./height-app-api.listobject.md) | Tasks belong to one list. To create tasks, it's necessary to know in which list you want to create them. |
+|  [MoveTasksRequest](./height-app-api.movetasksrequest.md) |  |
+|  [NotionDocumentLinkObject](./height-app-api.notiondocumentlinkobject.md) |  |
+|  [PatchTasksAssigneesEffect](./height-app-api.patchtasksassigneeseffect.md) | Update assignees |
+|  [PatchTasksDeletedEffect](./height-app-api.patchtasksdeletedeffect.md) | Update deleted |
+|  [PatchTasksDescriptionEffect](./height-app-api.patchtasksdescriptioneffect.md) | Update description |
+|  [PatchTasksFieldsEffect](./height-app-api.patchtasksfieldseffect.md) | Update fields |
+|  [PatchTasksListsEffect](./height-app-api.patchtaskslistseffect.md) | Update lists |
+|  [PatchTasksMoveToTrashEffect](./height-app-api.patchtasksmovetotrasheffect.md) | Move trash to the task |
+|  [PatchTasksNameEffect](./height-app-api.patchtasksnameeffect.md) | Update name |
+|  [PatchTasksOutOfTrashEffect](./height-app-api.patchtasksoutoftrasheffect.md) | Move task out of the trash |
+|  [PatchTasksParentTaskEffect](./height-app-api.patchtasksparenttaskeffect.md) | Update parent task |
+|  [PatchTasksRequest](./height-app-api.patchtasksrequest.md) | Patch multiples tasks |
+|  [PatchTasksResponse](./height-app-api.patchtasksresponse.md) |  |
+|  [PatchTasksStatusEffect](./height-app-api.patchtasksstatuseffect.md) | Update status |
+|  [PostMessageRequest](./height-app-api.postmessagerequest.md) |  |
+|  [PostMessageRequestWithQueries](./height-app-api.postmessagerequestwithqueries.md) |  |
+|  [SearchTasksRequest](./height-app-api.searchtasksrequest.md) |  |
+|  [SearchTasksResponse](./height-app-api.searchtasksresponse.md) |  |
+|  [SecurityLogEventObject](./height-app-api.securitylogeventobject.md) |  |
+|  [SentryAlertLinkObject](./height-app-api.sentryalertlinkobject.md) |  |
+|  [SentryIssueLinkObject](./height-app-api.sentryissuelinkobject.md) |  |
+|  [TaskFormObject](./height-app-api.taskformobject.md) | Uncertain typed. Height team did't provide schema for Task Form. |
+|  [TaskObject](./height-app-api.taskobject.md) |  |
+|  [UpdateFieldTemplateOptionRequest](./height-app-api.updatefieldtemplateoptionrequest.md) |  |
+|  [UpdateFieldTemplateOptionRequestWithId](./height-app-api.updatefieldtemplateoptionrequestwithid.md) |  |
+|  [UpdateListRequest](./height-app-api.updatelistrequest.md) |  |
+|  [UpdateListRequestWithId](./height-app-api.updatelistrequestwithid.md) |  |
+|  [UpdateTaskRequest](./height-app-api.updatetaskrequest.md) |  |
+|  [UpdateTaskRequestWithId](./height-app-api.updatetaskrequestwithid.md) |  |
+|  [UserObject](./height-app-api.userobject.md) |  |
+|  [ZendeskTicketLinkObject](./height-app-api.zendeskticketlinkobject.md) |  |

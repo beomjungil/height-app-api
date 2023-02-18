@@ -1,7 +1,32 @@
-import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, type ListActivitiesRequest, type ListActivitiesResponse, type PostMessageRequest, type ActivityObject, type ListAllFieldTemplatesResponse, type CreateFieldTemplateOptionRequestWithId, type FieldTemplateObject, type UpdateFieldTemplateOptionRequestWithId, type CreateTaskFromTaskFormRequestWithIdQueries, type TaskFormObject, type ListAllUsersResponse, type GetUserRequest, type UserObject, ListAllGroupsResponse } from './generated';
-import { type CreateListRequest } from './generated/models/CreateListRequest';
-import { type ListAllResponse } from './generated/models/ListAllResponse';
-import { type TaskObject } from './generated/models/TaskObject';
+import {
+  type CreateTaskRequestWithQueries,
+  type PatchTasksRequest,
+  type PatchTasksResponse,
+  type SearchTasksRequest,
+  type ListObject,
+  type UpdateListRequestWithId,
+  type UpdateTaskRequestWithId,
+  type GetTaskRequestWithId,
+  type MoveTasksRequest,
+  type ListActivitiesRequest,
+  type ListActivitiesResponse,
+  type PostMessageRequest,
+  type ActivityObject,
+  type ListAllFieldTemplatesResponse,
+  type CreateFieldTemplateOptionRequestWithId,
+  type FieldTemplateObject,
+  type UpdateFieldTemplateOptionRequestWithId,
+  type CreateTaskFromTaskFormRequestWithIdQueries,
+  type TaskFormObject,
+  type ListAllUsersResponse,
+  type GetUserRequest,
+  type UserObject,
+  type ListAllGroupsResponse,
+  type ListAllSecurityLogEventsResponse,
+  type TaskObject,
+  type CreateListRequest,
+  type ListAllResponse,
+} from './generated';
 
 type APIRequest = Record<string, unknown>;
 
@@ -65,5 +90,9 @@ export abstract class Methods {
 
   public readonly groups = {
     all: createApiCall<void, ListAllGroupsResponse>(this, { endpoint: '/groups', method: 'GET' }),
+  };
+
+  public readonly securityLogEvents = {
+    all: createApiCall<void, ListAllSecurityLogEventsResponse>(this, { endpoint: '/securityLogEvents', method: 'GET' }),
   };
 }
