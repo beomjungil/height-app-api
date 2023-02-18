@@ -57,4 +57,4 @@ height.lists.all();
 height.tasks.create({...});
 ```
 
-Check the [Use APIs](./use-apis.md) page to know how to use APIs.
+Check the [Use APIs](./use-api.md) page to know how to use APIs.
