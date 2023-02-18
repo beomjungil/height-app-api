@@ -26,7 +26,7 @@ import {
   type TaskObject,
   type CreateListRequest,
   type ListAllResponse,
-  WorkspaceObject,
+  type WorkspaceObject,
 } from './generated';
 
 type APIRequest = Record<string, unknown>;
