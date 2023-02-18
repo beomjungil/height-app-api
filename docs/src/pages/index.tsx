@@ -61,7 +61,7 @@ function HomepageHeader () {
     return () => {
       document.documentElement.classList.remove(styles.clearHeader);
     };
-  }, []);
+  });
 
   return (
     <>
