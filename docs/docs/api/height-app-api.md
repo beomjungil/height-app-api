@@ -90,4 +90,5 @@ This is a unofficial TypeScript wrapper for [Height API](https://www.notion.so/A
 |  [UpdateTaskRequest](./height-app-api.updatetaskrequest.md) |  |
 |  [UpdateTaskRequestWithId](./height-app-api.updatetaskrequestwithid.md) |  |
 |  [UserObject](./height-app-api.userobject.md) |  |
+|  [WorkspaceObject](./height-app-api.workspaceobject.md) |  |
 |  [ZendeskTicketLinkObject](./height-app-api.zendeskticketlinkobject.md) |  |

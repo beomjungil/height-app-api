@@ -26,6 +26,7 @@ import {
   type TaskObject,
   type CreateListRequest,
   type ListAllResponse,
+  WorkspaceObject,
 } from './generated';
 
 type APIRequest = Record<string, unknown>;
@@ -94,5 +95,9 @@ export abstract class Methods {
 
   public readonly securityLogEvents = {
     all: createApiCall<void, ListAllSecurityLogEventsResponse>(this, { endpoint: '/securityLogEvents', method: 'GET' }),
+  };
+
+  public readonly workspace = {
+    get: createApiCall<void, WorkspaceObject>(this, { endpoint: '/workspace', method: 'GET' }),
   };
 }

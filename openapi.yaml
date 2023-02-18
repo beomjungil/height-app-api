@@ -671,6 +671,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAllSecurityLogEventsResponse"
+  /workspace:
+    get:
+      tags:
+        - Workspace
+      summary: Retrieve the workspace
+      operationId: retrieveWorkspace
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.workspace.get();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkspaceObject"
 components:
   securitySchemes:
     apiKey:
@@ -2631,4 +2651,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SecurityLogEventObject'
+    WorkspaceObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique ID of the workspace.
+          example: 5a5e8d3f-c2ff-4a7a-aba4-4f22b19c5369
+        model:
+          type: string
+          description: The model is always `workspace`.
+          example: workspace
+        name:
+          type: string
+          description: The name of the workspace.
+          example: Acme
+        url:
+          type: string
+          description: The full URL of the workspace.
+          example: https://acme.height.app
+      required:
+        - id
+        - model
+        - name
+        - url
 

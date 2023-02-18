@@ -61,4 +61,5 @@ export type { UpdateListRequestWithId } from './models/UpdateListRequestWithId';
 export type { UpdateTaskRequest } from './models/UpdateTaskRequest';
 export type { UpdateTaskRequestWithId } from './models/UpdateTaskRequestWithId';
 export type { UserObject } from './models/UserObject';
+export type { WorkspaceObject } from './models/WorkspaceObject';
 export type { ZendeskTicketLinkObject } from './models/ZendeskTicketLinkObject';
