@@ -26,6 +26,43 @@ OpenAPI spec (OpenAPI)
 <hr />
 
 
-### Developement
 
-TODO
+<table align="center">
+<tr>
+<td>
+🚧
+</td>
+<td>
+This package is currently in development, and not actually usable yet.
+<br/>
+<b>Please DO NOT USE</b>
+</td>
+</tr>
+</table>
+
+### To-do
+
+**Migrate to OpenAPI Spec from [official docs](https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda)**
+- [x] Add 'Lists' APIs spec
+- [x] Add 'Tasks' APIs spec
+- [x] Add 'Activities' APIs spec
+- [ ] Add 'Field templates' APIs spec
+- [ ] Add 'Task forms' APIs spec
+- [ ] Add 'Users' APIs spec
+- [ ] Add 'Groups' APIs spec
+- [ ] Add 'Security log events' APIs spec
+- [ ] Add 'Workspace' APIs spec
+- [ ] Add 'Search' APIs spec
+
+**Make it public**
+- [ ] Publish to npm registry
+
+
+**Add Advanced features**
+- [ ] Add 'Webhooks' spec
+- [ ] Add 'OAuth2 Applications' spec
+
+**Add demo app**
+- [ ] Implement height cli
+- [ ] Implement raycast height extension
+- [ ] Implement 'height task card' figma plugin
