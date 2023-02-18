@@ -48,7 +48,7 @@ This package is currently in development, and not actually usable yet.
 - [x] Add 'Activities' APIs spec
 - [x] Add 'Field templates' APIs spec
 - [x] Add 'Task forms' APIs spec
-- [ ] Add 'Users' APIs spec
+- [x] Add 'Users' APIs spec
 - [ ] Add 'Groups' APIs spec
 - [ ] Add 'Security log events' APIs spec
 - [ ] Add 'Workspace' APIs spec

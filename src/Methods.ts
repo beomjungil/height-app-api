@@ -1,4 +1,4 @@
-import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, type ListActivitiesRequest, type ListActivitiesResponse, type PostMessageRequest, type ActivityObject, type ListAllFieldTemplatesResponse, type CreateFieldTemplateOptionRequestWithId, FieldTemplateObject, UpdateFieldTemplateOptionRequestWithId, CreateTaskFromTaskFormRequestWithIdQueries, TaskFormObject } from './generated';
+import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, type ListActivitiesRequest, type ListActivitiesResponse, type PostMessageRequest, type ActivityObject, type ListAllFieldTemplatesResponse, type CreateFieldTemplateOptionRequestWithId, FieldTemplateObject, UpdateFieldTemplateOptionRequestWithId, CreateTaskFromTaskFormRequestWithIdQueries, TaskFormObject, ListAllUsersResponse, GetUserRequest, UserObject } from './generated';
 import { type CreateListRequest } from './generated/models/CreateListRequest';
 import { type ListAllResponse } from './generated/models/ListAllResponse';
 import { type TaskObject } from './generated/models/TaskObject';
@@ -55,5 +55,11 @@ export abstract class Methods {
 
   public readonly taskForms = {
     createTask: createApiCall<CreateTaskFromTaskFormRequestWithIdQueries, TaskFormObject>(this, { endpoint: '/taskForms/:id/answers', method: 'POST' }),
+  };
+
+  public readonly users = {
+    all: createApiCall<void, ListAllUsersResponse>(this, { endpoint: '/users', method: 'GET' }),
+    get: createApiCall<GetUserRequest, UserObject>(this, { endpoint: '/users/:id', method: 'GET' }),
+    me: createApiCall<void, UserObject>(this, { endpoint: '/users/me', method: 'GET' }),
   };
 }

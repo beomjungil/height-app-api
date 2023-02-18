@@ -564,6 +564,73 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TaskFormObject"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      operationId: getUsers
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.users.all();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAllUsersResponse"
+  /users/:id:
+    get:
+      tags:
+        - Users
+      summary: Get a user
+      operationId: getUser
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.users.get({...});
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Get the current user
+      operationId: getCurrentUser
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.users.me();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserObject"
 components:
   securitySchemes:
     apiKey:
@@ -2288,3 +2355,125 @@ components:
             description: The list of questions in the task form.
           example:
             - id: b842f01d-8dfa-40cf-884
+    InvitedUserObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique ID of the user.
+        model:
+          type: string
+          description: The model is always `user`.
+          enum:
+            - user
+        state:
+          type: string
+          description: The state of the user.
+          enum:
+            - enabled
+            - invited
+          example: enabled
+        email:
+          type: string
+          description: The email of the user.
+        access:
+          type: string
+          enum:
+            - member
+            - guest
+            - anonymous
+          example: member
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time the user was created, see [Date formats](https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda).
+          example: 2023-02-18T10:15:00Z
+        pictureUrl:
+          type: string
+          description: The URL of the user's picture, if available.
+          example: https://example.com/user.jpg
+      required:
+        - id
+        - model
+        - state
+        - email
+        - access
+        - createdAt
+    EnabledUserObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique ID of the user.
+        model:
+          type: string
+          description: The model is always `user`.
+          enum:
+            - user
+        state:
+          type: string
+          description: The state of the user.
+          enum:
+            - enabled
+            - invited
+          example: enabled
+        email:
+          type: string
+          description: The email of the user.
+        username:
+          type: string
+          description: The username of the user, only available for `enabled` users.
+        firstname:
+          type: string
+          description: The first name of the user, only available for `enabled` users.
+        lastname:
+          type: string
+          description: The last name of the user, only available for `enabled` users.
+        access:
+          type: string
+          description: The access level of the user.
+          enum:
+            - member
+            - guest
+            - anonymous
+          example: member
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time the user was created, see [Date formats](https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda).
+          example: 2023-02-18T10:15:00Z
+        pictureUrl:
+          type: string
+          nullable: true
+          description: The URL of the user's picture, if available.
+          example: https://example.com/user.jpg
+      required:
+        - id
+        - model
+        - state
+        - email
+        - access
+        - createdAt
+        - username
+        - firstname
+        - lastname
+    UserObject:
+      allOf:
+        - $ref: '#/components/schemas/EnabledUserObject'
+        - $ref: '#/components/schemas/InvitedUserObject'
+    ListAllUsersResponse:
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserObject'
+          description: The list of users.
+    GetUserRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
