@@ -40,6 +40,19 @@ export class Height extends Methods {
     });
   }
 
+  private readonly requestToQueries = (request: Record<string, unknown> | undefined): URLSearchParams | undefined => {
+    const queries = Object.keys(request ?? {}).length
+      ? Object.entries(request ?? {}).reduce<Record<string, string>>((result, [key, value]) => ({
+        ...result,
+        [key]: typeof value === 'object'
+          ? JSON.stringify(value)
+          : String(value),
+      }), {})
+      : undefined;
+
+    return queries ? new URLSearchParams(queries) : undefined;
+  };
+
   private readonly normalizeArguments = (config: ApiConfig, request: Record<string, unknown> | undefined): { url: string; body: Record<string, unknown> | void } => {
     const pathVariables = config.endpoint.match(/:[a-zA-Z0-9]+/g);
 
@@ -63,18 +76,20 @@ export class Height extends Methods {
       }, { url: config.endpoint, omittedRequest: request });
 
     if (config.method === 'GET') {
-      const queries = Object.keys(omittedRequest ?? {}).length
-        ? Object.entries(omittedRequest ?? {}).reduce<Record<string, string>>((result, [key, value]) => ({
-          ...result,
-          [key]: typeof value === 'object'
-            ? JSON.stringify(value)
-            : String(value),
-        }), {})
-        : undefined;
+      const queries = this.requestToQueries(omittedRequest);
 
       return {
-        url: `${url}${queries ? `?${new URLSearchParams(queries).toString()}` : ''}`,
+        url: `${url}${queries ? `?${queries.toString()}` : ''}`,
         body: undefined,
+      };
+    }
+
+    if (Object.hasOwn(omittedRequest ?? {}, 'queryParams') && Object.keys(omittedRequest?.queryParams as Record<string, unknown>).length) {
+      const queries = this.requestToQueries(omittedRequest?.queryParams as Record<string, unknown>);
+
+      return {
+        url: `${url}?${queries?.toString() ?? ''}`,
+        body: omit(omittedRequest, 'queryParams' as keyof typeof omittedRequest),
       };
     }
 

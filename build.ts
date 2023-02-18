@@ -53,7 +53,7 @@ const buildESMForNode = async () => esbuild.build({
 });
 
 const buildDocs = async () => new Promise<void>((resolve, reject) => {
-  execSync('tsc src/*.ts --emitDeclarationOnly --outDir types --declaration');
+  execSync('tsc src/*.ts --emitDeclarationOnly --outDir types --declaration --lib es2022');
   mkdirSync(path.resolve('./dist/docs'));
   mkdirSync(path.resolve('./docs/docs/api'));
   const extractorConfig: ExtractorConfig = ExtractorConfig.loadFileAndPrepare(

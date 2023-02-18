@@ -468,14 +468,102 @@ paths:
       tags:
         - Task Forms
       summary: Create a task from a public task form
+      operationId: createTaskFromTaskForm
       description: |-
         ❌ Task forms have a set number of questions, so it is impossible to set some attributes for a task using this endpoint
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.taskForms.createTask({...});
+      parameters:
+        - name: id
+          in: path
+          description: task form id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: asBot
+          in: query
+          description: |-
+            Only allowed for public task forms, and required if not authenticated
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateTaskFromTaskFormRequest"
         required: true
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskObject"
+  /taskForms/:urlKey:
+    get:
+      tags:
+        - Task Forms
+      summary: Get a task form
+      operationId: getTaskForm
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.taskForms.get({...});
+      parameters:
+        - name: urlKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: keyType
+          in: query
+          description: One of key or urlKey, defaulting to id
+          schema:
+            type: string
+            enum:
+              - key
+              - urlKey
+        - name: include
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              description: Task form include type. Valid values are "RestrictedUsers", "RestrictedLists", "FieldTemplates", "SubtaskForms", "Questions", and "Fields".
+              enum:
+                - RestrictedUsers
+                - RestrictedLists
+                - FieldTemplates
+                - SubtaskForms
+                - Questions
+                - Fields
+          description: Array of task form includes
+        - name: archived
+          in: query
+          schema:
+            type: boolean
+            description: only look for archived or unarchived forms
+        - name: draft
+          in: query
+          schema:
+            type: boolean
+            description: only look for archived or unarchived forms
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskFormObject"
 components:
   securitySchemes:
     apiKey:
@@ -1955,3 +2043,248 @@ components:
             optionId:
               type: string
               format: uuid
+    CreateTaskFromTaskFormRequest:
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+                format: uuid
+                description: The id of the task form question
+              name:
+                type: string
+                description: The name of the task - required when the question is for the task name
+              status:
+                type: string
+                description: The id of the status of the task - required when the question is for the task status
+              assigneesIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+                description: The ids of the assignees of the task - required when the question is for the task assignees.
+              listIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+                description: The ids of the lists of the task - required when the question is for the lists
+                example:
+                  [
+                    d8dff420-ddbe-4afc-8837-f493e922be7b,
+                    2f2abf80-0a87-4d68-9241-fcc41f427c91,
+                  ]
+              description:
+                type: string
+                description: The description of the string. Accepts markdown. Required when the question is for the description
+              field:
+                type: object
+                required:
+                  - fieldTemplateId
+                properties:
+                  fieldTemplateId:
+                    type: string
+                    format: uuid
+                    description: The id of the appropriate field template
+                  value:
+                    type: string
+                    description: "For text fields: the text value of the field. For select fields: the id of the selected option"
+                  date:
+                    type: string
+                    format: date-time
+                    description: "For date fields: the date value of the field"
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                    description: "For labels fields: the labels of the field"
+                  linkedTasks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        index:
+                          type: number
+                    description: 'For linkedTasks fields: the tasks to be linked, in the format: { "id": "UUID", "index": number }'
+                description: TaskField Attributes (optional) Required to belong to the attribute associated with the question. See the Task Object for specifications
+          description: Array of question responses
+      required:
+        - questionId
+    CreateTaskFromTaskFormRequestWithIdQueries:
+      allOf:
+        - $ref: "#/components/schemas/CreateTaskFromTaskFormRequest"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: The id of the task form
+            queryParams:
+              type: object
+              properties:
+                asBot:
+                  type: boolean
+                  description: Only allowed for public task forms, and required if not authenticated
+    GetTaskFormRequest:
+      type: object
+      required:
+        - urlKey
+      properties:
+        urlKey:
+          type: string
+        keyType:
+          type: string
+          description: One of key or urlKey, defaulting to id
+          enum:
+            - key
+            - urlKey
+          example: urlKey
+        include:
+          type: array
+          items:
+            type: string
+            description: Task form include type. Valid values are "RestrictedUsers", "RestrictedLists", "FieldTemplates", "SubtaskForms", "Questions", and "Fields".
+            enum:
+              - RestrictedUsers
+              - RestrictedLists
+              - FieldTemplates
+              - SubtaskForms
+              - Questions
+              - Fields
+          description: Array of task form includes
+        archived:
+          type: boolean
+          description: only look for archived or unarchived forms
+        draft:
+          type: boolean
+          description: only look for archived or unarchived forms
+    TaskFormObject:
+      description: Uncertain typed. Height team did't provide schema for Task Form.
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the task form.
+          example: c91896fb-cb00-4122-9e13-5ea3f760f3a4
+        model:
+          type: string
+          description: always "taskForm"
+          enum:
+            - taskForm
+        version:
+          type: integer
+          description: The version of the task form.
+          example: 2
+        key:
+          type: string
+          description: The key of the task form.
+          example: JfsPVS9NxJ
+        urlKey:
+          type: string
+          description: The URL key of the task form.
+          example: ryNw67fFHJCd
+        url:
+          type: string
+          description: The URL of the task form.
+          example: https://height.app/u28gpe10d5/?taskForm=Task-submission-ryNw67fFHJCd
+        name:
+          type: string
+          description: The name of the task form.
+          example: Task submission
+        taskFormDescription:
+          type: string
+          description: The description of the task form.
+          example: ""
+        disabledReason:
+          type:
+            - "null"
+            - string
+          nullable: true
+          description: The reason why the task form is disabled.
+          example: null
+        archived:
+          type: boolean
+          description: Flag to indicate whether the task form is archived.
+          example: false
+        draft:
+          type: boolean
+          description: Flag to indicate whether the task form is a draft.
+          example: false
+        publicAccess:
+          type: string
+          description: The type of public access for the task form.
+          example: readonly
+        listIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: The IDs of the lists associated with the task form.
+          example: [baa40cc6-240f-4df2-a01b-22476876d61e]
+        parentTaskId:
+          type:
+            - "null"
+            - string
+          nullable: true
+          format: uuid
+          description: The ID of the parent task.
+          example: null
+        status:
+          type: string
+          description: |-
+            The status of the task.
+            - `backLog`
+            - `inProgress`
+            - `done`
+            - and any *UUID* of available statuses. You can find the *UUIDs* through the field template API.
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: The ID of the question.
+                example: b842f01d-8dfa-40cf-884d-1b2b95d8b6fb
+              fieldId:
+                type: string
+                description: The ID of the field.
+                example: name
+              value:
+                type: string
+                description: The value of the question.
+                example: Task Name
+              required:
+                type: boolean
+                description: Flag to indicate whether the question is required.
+                example: true
+              placeholder:
+                type: string
+                nullable: true
+                description: The placeholder for the question.
+                example: Name
+              restrictedLabelIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+                description: The IDs of the restricted labels for the question.
+                example: []
+              multipleLabels:
+                type: boolean
+                description: Flag to indicate whether the question accepts multiple labels.
+                example: true
+            description: The list of questions in the task form.
+          example:
+            - id: b842f01d-8dfa-40cf-884

@@ -1,4 +1,4 @@
-import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, type ListActivitiesRequest, type ListActivitiesResponse, type PostMessageRequest, type ActivityObject, type ListAllFieldTemplatesResponse, type CreateFieldTemplateOptionRequestWithId, FieldTemplateObject, UpdateFieldTemplateOptionRequestWithId } from './generated';
+import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, type ListActivitiesRequest, type ListActivitiesResponse, type PostMessageRequest, type ActivityObject, type ListAllFieldTemplatesResponse, type CreateFieldTemplateOptionRequestWithId, FieldTemplateObject, UpdateFieldTemplateOptionRequestWithId, CreateTaskFromTaskFormRequestWithIdQueries, TaskFormObject } from './generated';
 import { type CreateListRequest } from './generated/models/CreateListRequest';
 import { type ListAllResponse } from './generated/models/ListAllResponse';
 import { type TaskObject } from './generated/models/TaskObject';
@@ -51,5 +51,9 @@ export abstract class Methods {
     all: createApiCall<void, ListAllFieldTemplatesResponse>(this, { endpoint: '/fieldTemplates', method: 'GET' }),
     createOption: createApiCall<CreateFieldTemplateOptionRequestWithId, FieldTemplateObject>(this, { endpoint: '/fieldTemplates/:id/options', method: 'POST' }),
     updateOption: createApiCall<UpdateFieldTemplateOptionRequestWithId, FieldTemplateObject>(this, { endpoint: '/fieldTemplates/:id/options/:optionId', method: 'PUT' }),
+  };
+
+  public readonly taskForms = {
+    createTask: createApiCall<CreateTaskFromTaskFormRequestWithIdQueries, TaskFormObject>(this, { endpoint: '/taskForms/:id/answers', method: 'POST' }),
   };
 }
