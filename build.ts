@@ -147,7 +147,7 @@ void (async () => {
     buildESMForNode(),
   ]);
 
-  copyFileSync('openapi.json', 'docs/openapi.json');
+  copyFileSync('openapi.yaml', 'docs/openapi.yaml');
 
   await buildDocs();
 })();

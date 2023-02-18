@@ -13,7 +13,7 @@ displayed_sidebar: null
 **Signature:**
 
 ```typescript
-apiRequest(config: ApiConfig, request: Record<string, unknown> | void): Promise<unknown>;
+apiRequest(config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown>;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ apiRequest(config: ApiConfig, request: Record<string, unknown> | void): Promise<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  config | ApiConfig |  |
-|  request | Record&lt;string, unknown&gt; &#124; void |  |
+|  request | Record&lt;string, unknown&gt; &#124; undefined |  |
 
 **Returns:**
 

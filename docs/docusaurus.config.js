@@ -7,9 +7,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Height App API',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Unofficial TypeScript Wrapper Height App API',
   favicon: 'img/favicon.ico',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://height-api.xyz',
   baseUrl: '/',
 
   organizationName: 'beomjungil',
@@ -30,17 +30,13 @@ const config = {
         docs: {
           breadcrumbs: false,
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+            'https://github.com/beomjungil/height-app-api/tree/main/packages/create-docusaurus/templates/shared/'
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+            'https://github.com/beomjungil/height-app-api/tree/main/packages/create-docusaurus/templates/shared/'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
@@ -53,7 +49,7 @@ const config = {
     [
       'docusaurus-plugin-redoc',
       {
-        spec: './openapi.json',
+        spec: './openapi.yaml',
         route: '/openapi/',
       },
     ]
@@ -96,11 +92,11 @@ const config = {
           {
             to: 'openapi/',
             position: 'left',
-            label: 'Test API'
+            label: 'OpenAPI spec'
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/beomjungil/height-app-api',
             label: 'GitHub',
             position: 'right'
           },
@@ -144,7 +140,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus'
+                href: 'https://github.com/beomjungil/height-app-api'
               },
             ]
           },

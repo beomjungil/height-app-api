@@ -1,6 +1,7 @@
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
 import { type HeightConfig } from './HeightConfig';
 import { type ApiConfig, Methods } from './Methods';
+import omit from './utils/omit';
 
 /**
  * A Wrapper for the {@link https://www.notion.so/API-documentation-643aea5bf01742de9232e5971cb4afda | Height API}
@@ -39,13 +40,61 @@ export class Height extends Methods {
     });
   }
 
-  public async apiRequest (config: ApiConfig, request: Record<string, unknown> | void): Promise<unknown> {
+  private readonly normalizeArguments = (config: ApiConfig, request: Record<string, unknown> | undefined): { url: string; body: Record<string, unknown> | void } => {
+    const pathVariables = config.endpoint.match(/:[a-zA-Z0-9]+/g);
+
+    const { url, omittedRequest } = pathVariables === null
+      ? { url: config.endpoint, omittedRequest: request }
+      : pathVariables.reduce((result, pathVariable) => {
+        const key = pathVariable.replace(':', '');
+
+        if (request?.[key] != null) {
+          const replaceValue = typeof request[key] === 'object' ? JSON.stringify(request[key]) : request[key] as string;
+          return {
+            url: result.url.replace(
+              pathVariable,
+              replaceValue,
+            ),
+            omittedRequest: omit(result.omittedRequest, key as keyof typeof result.omittedRequest),
+          };
+        }
+
+        return result;
+      }, { url: config.endpoint, omittedRequest: request });
+
+    if (config.method === 'GET') {
+      const queries = Object.keys(omittedRequest ?? {}).length
+        ? Object.entries(omittedRequest ?? {}).reduce<Record<string, string>>((result, [key, value]) => ({
+          ...result,
+          [key]: typeof value === 'object'
+            ? JSON.stringify(value)
+            : String(value),
+        }), {})
+        : undefined;
+
+      return {
+        url: `${url}${queries ? `?${new URLSearchParams(queries).toString()}` : ''}`,
+        body: undefined,
+      };
+    }
+
+    return {
+      url,
+      body: omittedRequest,
+    };
+  };
+
+  public async apiRequest (config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown> {
+    const { url, body } = this.normalizeArguments(config, request);
+    console.log({ url, body });
     return new Promise((resolve, reject) => {
       this.api.request({
         method: config.method,
-        url: config.endpoint,
+        url,
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-        data: request ? JSON.stringify(request) : undefined,
+        data: request
+          ? JSON.stringify(body)
+          : undefined,
       })
         .then((response) => { resolve(response.data); })
         .catch((error: AxiosError) => {

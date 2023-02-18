@@ -50,6 +50,7 @@
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/return-await": "off",
-    "@typescript-eslint/no-invalid-void-type": "off"
+    "@typescript-eslint/no-invalid-void-type": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }

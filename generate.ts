@@ -44,7 +44,7 @@ async function overrideGenerated (): Promise<void> {
 void (async () => {
   await rimraf('src/generated');
   await OpenAPI.generate({
-    input: './openapi.json',
+    input: './openapi.yaml',
     output: './src/generated',
     useUnionTypes: true,
     indent: '2',

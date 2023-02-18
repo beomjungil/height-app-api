@@ -5,6 +5,6 @@
 import type { ListObject } from './ListObject';
 
 export type ListAllResponse = {
-  lists: Array<ListObject>;
+  list?: Array<ListObject>;
 };
 

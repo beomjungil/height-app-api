@@ -18,7 +18,12 @@
   },
   "servers": [
     {
-      "url": "https://https://api.height.app"
+      "url": "https://api.height.app"
+    }
+  ],
+  "security": [
+    {
+      "apiKey": []
     }
   ],
   "tags": [
@@ -233,6 +238,14 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "description": "The Height API uses API keys to authenticate requests. **You can view your API key in the Height settings under API**.\n ex: `api-key secret_1234`",
+        "in": "header"
+      }
+    },
     "schemas": {
       "ListObject": {
         "type": "object",
@@ -990,13 +1003,18 @@
             "type": "object",
             "description": "This is for queries",
             "properties": {
-              "realtime": {
-                "description": "(defaults to true) - use false when migrating tasks",
-                "type": "boolean"
-              },
-              "notifyUsers": {
-                "description": "(defaults to true) - use false when migrating tasks",
-                "type": "boolean"
+              "queryParams": {
+                "type": "object",
+                "properties": {
+                  "realtime": {
+                    "description": "(defaults to true) - use false when migrating tasks",
+                    "type": "boolean"
+                  },
+                  "notifyUsers": {
+                    "description": "(defaults to true) - use false when migrating tasks",
+                    "type": "boolean"
+                  }
+                }
               }
             }
           }

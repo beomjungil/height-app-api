@@ -1,9 +1,7 @@
-import { type ListObject } from './generated';
+import { type CreateTaskRequestWithQueries, type PatchTasksRequest, type PatchTasksResponse, type SearchTasksRequest, type ListObject, type UpdateListRequestWithId, type UpdateTaskRequestWithId, type GetTaskRequestWithId, type MoveTasksRequest, ListActivitiesRequest, ListActivitiesResponse, PostMessageRequest, ActivityObject } from './generated';
 import { type CreateListRequest } from './generated/models/CreateListRequest';
-import { type CreateTaskRequest } from './generated/models/CreateTaskRequest';
 import { type ListAllResponse } from './generated/models/ListAllResponse';
 import { type TaskObject } from './generated/models/TaskObject';
-import { type UpdateListRequest } from './generated/models/UpdateListRequest';
 
 type APIRequest = Record<string, unknown>;
 
@@ -31,11 +29,21 @@ export abstract class Methods {
 
   public readonly lists = {
     create: createApiCall<CreateListRequest, ListObject>(this, { endpoint: '/lists', method: 'POST' }),
-    update: createApiCall<UpdateListRequest, ListObject>(this, { endpoint: '/lists', method: 'PUT' }),
+    update: createApiCall<UpdateListRequestWithId, ListObject>(this, { endpoint: '/lists/:id', method: 'PUT' }),
     all: createApiCall<void, ListAllResponse>(this, { endpoint: '/lists', method: 'GET' }),
   };
 
   public readonly tasks = {
-    create: createApiCall<CreateTaskRequest, TaskObject>(this, { endpoint: '/tasks', method: 'POST' }),
+    create: createApiCall<CreateTaskRequestWithQueries, TaskObject>(this, { endpoint: '/tasks', method: 'POST' }),
+    patch: createApiCall<PatchTasksRequest, PatchTasksResponse>(this, { endpoint: '/tasks', method: 'PATCH' }),
+    search: createApiCall<SearchTasksRequest, SearchTasksRequest>(this, { endpoint: '/tasks', method: 'GET' }),
+    update: createApiCall<UpdateTaskRequestWithId, TaskObject>(this, { endpoint: '/tasks/:id', method: 'PATCH' }),
+    get: createApiCall<GetTaskRequestWithId, TaskObject>(this, { endpoint: '/tasks/:id', method: 'GET' }),
+    move: createApiCall<MoveTasksRequest, TaskObject>(this, { endpoint: '/tasks/move', method: 'PUT' }),
+  };
+
+  public readonly activities = {
+    get: createApiCall<ListActivitiesRequest, ListActivitiesResponse>(this, { endpoint: '/activities', method: 'GET' }),
+    post: createApiCall<PostMessageRequest, ActivityObject>(this, { endpoint: '/activities', method: 'POST' }),
   };
 }
