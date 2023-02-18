@@ -10,3 +10,4 @@
 
 export * from './Height';
 export * from './HeightConfig';
+export * from './generated';

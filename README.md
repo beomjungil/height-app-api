@@ -49,7 +49,7 @@ This package is currently in development, and not actually usable yet.
 - [x] Add 'Field templates' APIs spec
 - [x] Add 'Task forms' APIs spec
 - [x] Add 'Users' APIs spec
-- [ ] Add 'Groups' APIs spec
+- [x] Add 'Groups' APIs spec
 - [ ] Add 'Security log events' APIs spec
 - [ ] Add 'Workspace' APIs spec
 - [ ] Add 'Search' APIs spec

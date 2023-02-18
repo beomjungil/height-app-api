@@ -631,6 +631,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserObject"
+  /groups:
+    get:
+      tags:
+        - Groups
+      summary: Get all groups
+      operationId: getAllGroups
+      x-codeSamples:
+        - lang: JavaScript
+          label: SDK
+          source: |-
+            const height = new Height({secretKey: 'secret_your-key'});
+
+            height.groups.all();
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAllGroupsResponse"
 components:
   securitySchemes:
     apiKey:
@@ -2477,3 +2497,48 @@ components:
         id:
           type: string
           format: uuid
+    GroupObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique ID of the group.
+        model:
+          type: string
+          description: The model is always `group`.
+          enum:
+            - group
+        name:
+          type: string
+          description: The name of the group.
+        handle:
+          type: string
+          description: The handle of the group.
+        hue:
+          type: number
+          description: The color/hue (0-360) of the group.
+        userIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: The list of user IDs that are in the group.
+        archived:
+          type: boolean
+          description: Flag to indicate whether the group is archived.
+      required:
+        - id
+        - model
+        - name
+        - handle
+        - hue
+        - userIds
+        - archived
+    ListAllGroupsResponse:
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupObject'
