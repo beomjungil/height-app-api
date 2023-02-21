@@ -1,6 +1,6 @@
 {
   "name": "height-app-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unofficial TypeScript Wrapper for Height App API",
   "license": "MIT",
   "author": "Beomjun Gil <gil@beomjun.kr> (https://github.com/beomjungil)",
@@ -30,6 +30,15 @@
       "default": "./dist/cjs/index.cjs"
     }
   },
+  "files": [
+    "package.json",
+    "dist/cjs/index.cjs",
+    "dist/cjs/index.cjs.map",
+    "dist/es/height-app-api.mjs.map",
+    "dist/es/index.js",
+    "dist/es/index.js.map",
+    "dist/types/height-app-api.d.ts"
+  ],
   "devDependencies": {
     "@microsoft/api-extractor": "^7.34.4",
     "@types/node": "^18.13.0",
