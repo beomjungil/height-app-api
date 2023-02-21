@@ -8,6 +8,7 @@
  * @packageDocumentation
  */
 
-export * from './Height';
+import { Height } from './Height';
+export default Height;
 export * from './HeightConfig';
 export * from './generated';
