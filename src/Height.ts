@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance, type AxiosError } from 'axios';
+import 'cross-fetch/polyfill';
 import { type HeightConfig } from './HeightConfig';
 import { type ApiConfig, Methods } from './Methods';
 import omit from './utils/omit';
@@ -23,20 +23,21 @@ export class Height extends Methods {
    * Axios instance to call Height API
    * @internal
    */
-  private readonly api: AxiosInstance;
+  private readonly api: (path: string, init: RequestInit) => Promise<Response>;
 
   /**
    * @param config - Configuration for Height API Wrapper
    */
-  constructor (config: HeightConfig) {
+  constructor(config: HeightConfig) {
     super();
     this.config = config;
-    this.api = axios.create({
-      baseURL: 'https://api.height.app',
+    this.api = (path, init) => fetch('https://api.height.app' + path, {
+      ...init,
       headers: {
+        ...(init.headers ?? {}),
         Authorization: `api-key ${this.config.secretKey}`,
         'Content-Type': 'application/json',
-      },
+      }
     });
   }
 
@@ -99,20 +100,21 @@ export class Height extends Methods {
     };
   };
 
-  public async apiRequest (config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown> {
+  public async apiRequest(config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown> {
     const { url, body } = this.normalizeArguments(config, request);
-    console.log({ url, body });
+
     return new Promise((resolve, reject) => {
-      this.api.request({
+      this.api(url, {
         method: config.method,
-        url,
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-        data: request
+        body: request
           ? JSON.stringify(body)
           : undefined,
       })
-        .then((response) => { resolve(response.data); })
-        .catch((error: AxiosError) => {
+        .then((response) => {
+          response.json().then(resolve);
+        })
+        .catch((error) => {
           if (error.response != null) {
             reject(error.response.data);
           }

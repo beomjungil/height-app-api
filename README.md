@@ -38,8 +38,38 @@ NPM
 </td>
 <td>
 This package is currently in development,
-Only some features are supported. See <a href="https://github.com/beomjungil/height-app-api/blob/main/TODO.md">here</a> for details
+'Webhooks' and 'OAuth' are supported. See <a href="https://github.com/beomjungil/height-app-api/blob/main/TODO.md">here</a> for details
 <br/>
 </td>
 </tr>
 </table>
+
+## Getting Started
+
+
+
+## Install
+
+If you use npm:
+
+```bash
+npm install height-app-api
+```
+
+If you use yarn:
+
+```bash
+yarn add height-app-api
+```
+
+If you use pnpm:
+
+```bash
+pnpm add height-app-api
+```
+
+It's contains type itself, so you don't need to install `@types/height-app-api`.
+
+## Usage
+
+[Go to docs](https://height-api.xyz)

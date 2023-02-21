@@ -25,19 +25,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7.27.0
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version: 18.14.0
-          cache: 'pnpm'
+          cache: 'yarn'
       - name: Generate Docs
         run: |
           cd docs
-          pnpm i --frozen-lockfile
-          pnpm build
+          yarn install --frozen-lockfile
+          yarn build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

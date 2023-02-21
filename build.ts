@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import path from 'path';
 import { copyFileSync, createReadStream, mkdirSync, readdirSync, writeFileSync } from 'fs';
-
+import { commonjs } from '@hyrious/esbuild-plugin-commonjs';
 import esbuild from 'esbuild';
 import rimraf from 'rimraf';
 import {
@@ -17,10 +17,6 @@ const buildCJS = async () => await esbuild.build({
   outfile: 'dist/cjs/index.cjs',
   minify: true,
   sourcemap: true,
-  target: [
-    'es2020',
-    // TODO: Add browser support
-  ],
   format: 'cjs',
 });
 
@@ -32,7 +28,13 @@ const buildESMForBrowser = async () => await esbuild.build({
   sourcemap: true,
   target: [
     'es2020',
-    // TODO: Add browser support
+    'chrome60',
+    'firefox60',
+    'safari11',
+    'edge18',
+  ],
+  plugins: [
+    commonjs(),
   ],
   format: 'esm',
   platform: 'browser',
@@ -49,11 +51,14 @@ const buildESMForNode = async () => esbuild.build({
     'node12',
   ],
   format: 'esm',
+  plugins: [
+    commonjs(),
+  ],
   platform: 'node',
 });
 
 const buildDocs = async () => new Promise<void>((resolve, reject) => {
-  execSync('tsc src/*.ts --emitDeclarationOnly --outDir types --declaration --lib es2022');
+  execSync('tsc src/*.ts --emitDeclarationOnly --outDir types --declaration --lib es2022,dom');
   mkdirSync(path.resolve('./dist/docs'));
   mkdirSync(path.resolve('./docs/docs/api'));
   const extractorConfig: ExtractorConfig = ExtractorConfig.loadFileAndPrepare(
