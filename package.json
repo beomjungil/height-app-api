@@ -1,6 +1,6 @@
 {
   "name": "height-app-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Unofficial TypeScript Wrapper for Height App API",
   "license": "MIT",
   "author": "Beomjun Gil <gil@beomjun.kr> (https://github.com/beomjungil)",
