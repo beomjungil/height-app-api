@@ -27,6 +27,7 @@ import {
   type CreateListRequest,
   type ListAllResponse,
   type WorkspaceObject,
+  type SearchTasksResponse,
 } from './generated';
 
 type APIRequest = Record<string, unknown>;
@@ -62,7 +63,7 @@ export abstract class Methods {
   public readonly tasks = {
     create: createApiCall<CreateTaskRequestWithQueries, TaskObject>(this, { endpoint: '/tasks', method: 'POST' }),
     patch: createApiCall<PatchTasksRequest, PatchTasksResponse>(this, { endpoint: '/tasks', method: 'PATCH' }),
-    search: createApiCall<SearchTasksRequest, SearchTasksRequest>(this, { endpoint: '/tasks', method: 'GET' }),
+    search: createApiCall<SearchTasksRequest, SearchTasksResponse>(this, { endpoint: '/tasks', method: 'GET' }),
     update: createApiCall<UpdateTaskRequestWithId, TaskObject>(this, { endpoint: '/tasks/:id', method: 'PATCH' }),
     get: createApiCall<GetTaskRequestWithId, TaskObject>(this, { endpoint: '/tasks/:id', method: 'GET' }),
     move: createApiCall<MoveTasksRequest, TaskObject>(this, { endpoint: '/tasks/move', method: 'PUT' }),
