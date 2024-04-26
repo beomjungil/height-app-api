@@ -8,7 +8,7 @@
 export type PatchTasksFieldsEffect = {
   type: 'fields';
   fieldTemplateId: string;
-  fields: {
+  field: {
     /**
      * The value of the field when the template type is text.
      */
