@@ -1566,7 +1566,7 @@ components:
       required:
         - type
         - fieldTemplateId
-        - fields
+        - field
       properties:
         type:
           type: string
@@ -1575,7 +1575,7 @@ components:
         fieldTemplateId:
           type: string
           format: uuid
-        fields:
+        field:
           type: object
           properties:
             text:
