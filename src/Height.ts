@@ -1,6 +1,6 @@
 import 'cross-fetch/polyfill';
 import { type HeightConfig } from './HeightConfig';
-import { type ApiConfig, Methods } from './Methods';
+import { Methods, type ApiConfig } from './Methods';
 import omit from './utils/omit';
 
 /**
@@ -28,16 +28,16 @@ export class Height extends Methods {
   /**
    * @param config - Configuration for Height API Wrapper
    */
-  constructor(config: HeightConfig) {
+  constructor (config: HeightConfig) {
     super();
     this.config = config;
-    this.api = (path, init) => fetch('https://api.height.app' + path, {
+    this.api = async (path, init) => fetch('https://api.height.app' + path, {
       ...init,
       headers: {
         ...(init.headers ?? {}),
         Authorization: `api-key ${this.config.secretKey}`,
         'Content-Type': 'application/json',
-      }
+      },
     });
   }
 
@@ -100,7 +100,7 @@ export class Height extends Methods {
     };
   };
 
-  public async apiRequest(config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown> {
+  public async apiRequest (config: ApiConfig, request: Record<string, unknown> | undefined): Promise<unknown> {
     const { url, body } = this.normalizeArguments(config, request);
 
     return new Promise((resolve, reject) => {
@@ -112,10 +112,13 @@ export class Height extends Methods {
           : undefined,
       })
         .then((response) => {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           response.json().then(resolve);
         })
         .catch((error) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           if (error.response != null) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             reject(error.response.data);
           }
           reject(error);

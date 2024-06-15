@@ -18,7 +18,7 @@ Update fields
 export type PatchTasksFieldsEffect = {
     type: 'fields';
     fieldTemplateId: string;
-    fields: {
+    field: {
         text?: string | null;
         date?: string | null;
         recursion?: any | null;

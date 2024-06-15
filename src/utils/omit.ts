@@ -1,5 +1,6 @@
 
 const omit = <T>(obj: T, ...keys: Array<keyof T>) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const ret = {} as {
     [K in keyof typeof obj]: (typeof obj)[K]
   };
